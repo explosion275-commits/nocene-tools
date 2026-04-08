@@ -3,15 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Language Learning Sets â NocÃ¨ne</title>
-    <meta name="description" content="Generate custom vocabulary sets, grammar tips, and quizzes for 12 languages with AI. Learn smarter, not harder.">
-    <meta property="og:title" content="AI Language Learning Sets â NocÃ¨ne">
-    <meta property="og:description" content="Generate custom vocabulary sets, grammar tips, and quizzes for 12 languages with AI.">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:wght@400&display=swap" rel="stylesheet">
-
+    <title>AI Language Learning Sets | Noc&#232;ne</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display:wght@400&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -19,239 +12,209 @@
             box-sizing: border-box;
         }
 
-        body {
+        html, body {
             background-color: #09090e;
             color: #ededf0;
             font-family: 'DM Sans', sans-serif;
             line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        a {
-            color: #e8c87a;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
         }
 
         /* Navigation */
         nav {
-            background-color: #0f0f14;
-            border-bottom: 1px solid #1a1a22;
-            padding: 1rem 0;
             position: sticky;
             top: 0;
-            z-index: 100;
-        }
-
-        nav .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
+            background-color: #0f0f14;
+            border-bottom: 1px solid #1a1a22;
+            padding: 1.25rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            z-index: 100;
         }
 
-        .logo {
+        .nav-logo {
             font-family: 'DM Serif Display', serif;
             font-size: 1.5rem;
             font-weight: 400;
-            color: #e8c87a;
-            cursor: pointer;
-        }
-
-        .logo:hover {
             text-decoration: none;
+            color: #ededf0;
+            transition: color 0.3s ease;
         }
 
-        .credit-badge {
-            font-size: 0.875rem;
-            padding: 0.5rem 1rem;
+        .nav-logo:hover {
+            color: #e8c87a;
+        }
+
+        .credit-badge-count {
             background-color: #1a1a22;
             border: 1px solid #2a2a32;
-            border-radius: 0.375rem;
-            color: #b0b0b8;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            color: #ededf0;
         }
 
-        /* Main container */
-        .container {
+        /* Main Container */
+        main {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 3rem 2rem;
         }
 
-        /* Page header */
-        .page-header {
-            padding: 3rem 0;
-            border-bottom: 1px solid #1a1a22;
-            margin-bottom: 3rem;
-        }
-
-        .page-header h1 {
+        h1 {
             font-family: 'DM Serif Display', serif;
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 400;
             margin-bottom: 0.5rem;
-            letter-spacing: -0.02em;
         }
 
-        .page-header p {
-            font-size: 1.125rem;
-            color: #b0b0b8;
+        .subtitle {
+            color: #a8a8b0;
+            margin-bottom: 3rem;
+            font-size: 1rem;
         }
 
-        /* Selection section */
+        /* Selection Sections */
         .selection-section {
             margin-bottom: 3rem;
         }
 
-        .selector-group {
-            margin-bottom: 2.5rem;
-        }
-
-        .selector-label {
+        .section-title {
             font-family: 'DM Serif Display', serif;
             font-size: 1.5rem;
             font-weight: 400;
             margin-bottom: 1.5rem;
-            display: block;
+            color: #ededf0;
         }
 
+        /* Card Grid */
         .card-grid {
             display: grid;
             gap: 1rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
 
-        .card-grid.languages {
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        .languages-grid {
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
         }
 
-        .card-grid.levels {
-            grid-template-columns: repeat(3, 1fr);
+        .levels-grid {
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
         }
 
-        .card-grid.topics {
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        .topics-grid {
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
         }
 
-        .selection-card {
-            padding: 1rem;
-            border: 2px solid #2a2a32;
-            border-radius: 0.5rem;
+        /* Card Styles */
+        .card {
+            background-color: #0f0f14;
+            border: 2px solid #1a1a22;
+            border-radius: 8px;
+            padding: 1.5rem;
             cursor: pointer;
             transition: all 0.3s ease;
             text-align: center;
-            background-color: #0f0f14;
             font-weight: 500;
-            user-select: none;
         }
 
-        .selection-card:hover {
-            border-color: #3a3a42;
-            background-color: #1a1a22;
+        .card:hover {
+            border-color: #2a2a32;
+            background-color: #14141b;
         }
 
-        .selection-card.selected {
-            border-color: #e8c87a;
-            background-color: #1a1a22;
-            box-shadow: 0 0 20px rgba(232, 200, 122, 0.2);
-            color: #e8c87a;
-        }
-
-        /* Generation button */
-        .action-section {
-            margin-bottom: 3rem;
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 0.875rem 2rem;
-            border: none;
-            border-radius: 0.5rem;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary {
+        .card.selected {
             background-color: #e8c87a;
             color: #09090e;
-            flex: 1;
-            min-width: 250px;
+            border-color: #e8c87a;
+            font-weight: 700;
         }
 
-        .btn-primary:hover {
-            background-color: #f0d89c;
+        /* Action Button */
+        .generate-section {
+            display: flex;
+            justify-content: center;
+            margin: 3rem 0;
         }
 
-        .btn-primary:active {
-            transform: scale(0.98);
+        .generate-btn {
+            background-color: #e8c87a;
+            color: #09090e;
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'DM Sans', sans-serif;
         }
 
-        .btn-primary:disabled {
-            background-color: #4a4a52;
-            color: #6a6a72;
+        .generate-btn:hover:not(:disabled) {
+            background-color: #f5d798;
+            transform: translateY(-2px);
+        }
+
+        .generate-btn:disabled {
+            background-color: #5a5a62;
+            color: #a8a8b0;
             cursor: not-allowed;
         }
 
-        .btn-secondary {
-            background-color: #1a1a22;
-            color: #ededf0;
-            border: 1px solid #2a2a32;
-        }
-
-        .btn-secondary:hover {
-            background-color: #2a2a32;
-            border-color: #3a3a42;
-        }
-
-        /* Output area */
-        .output-section {
-            margin-top: 3rem;
-            padding: 2rem;
-            background-color: #0f0f14;
-            border: 1px solid #1a1a22;
-            border-radius: 0.75rem;
+        /* Loading State */
+        .loading {
             display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 3px solid #1a1a22;
+            border-top: 3px solid #e8c87a;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Output Section */
+        .output-section {
+            display: none;
+            margin-top: 3rem;
         }
 
         .output-section.active {
             display: block;
         }
 
-        /* Tabs */
-        .tab-nav {
+        .tabs {
             display: flex;
-            gap: 0.5rem;
+            gap: 1rem;
             margin-bottom: 2rem;
             border-bottom: 1px solid #1a1a22;
-            flex-wrap: wrap;
         }
 
         .tab-btn {
-            padding: 0.75rem 1.25rem;
-            background-color: transparent;
-            color: #b0b0b8;
+            background: none;
             border: none;
+            color: #a8a8b0;
+            padding: 1rem;
             cursor: pointer;
-            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
             font-weight: 500;
-            border-bottom: 2px solid transparent;
+            border-bottom: 3px solid transparent;
             transition: all 0.3s ease;
-            margin-bottom: -1px;
-        }
-
-        .tab-btn:hover {
-            color: #ededf0;
-            border-bottom-color: #3a3a42;
+            font-family: 'DM Sans', sans-serif;
         }
 
         .tab-btn.active {
@@ -267,693 +230,312 @@
             display: block;
         }
 
-        /* Vocabulary table */
-        .vocab-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-        }
-
-        .vocab-table th {
-            background-color: #1a1a22;
-            padding: 1rem;
-            text-align: left;
-            font-weight: 600;
-            border-bottom: 1px solid #2a2a32;
-        }
-
-        .vocab-table td {
-            padding: 1rem;
-            border-bottom: 1px solid #1a1a22;
-        }
-
-        .vocab-table tbody tr:hover {
-            background-color: #1a1a22;
-        }
-
-        /* Sentences list */
-        .sentences-list {
-            margin-top: 1rem;
-        }
-
-        .sentence-item {
-            padding: 1.25rem;
-            background-color: #1a1a22;
-            border-radius: 0.5rem;
-            margin-bottom: 0.75rem;
-            border-left: 3px solid #e8c87a;
-        }
-
-        .sentence-original {
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #e8c87a;
-        }
-
-        .sentence-translation {
-            color: #b0b0b8;
-            font-size: 0.95rem;
-        }
-
-        /* Grammar tips */
-        .grammar-list {
-            margin-top: 1rem;
-        }
-
-        .grammar-item {
-            padding: 1.25rem;
-            background-color: #1a1a22;
-            border-radius: 0.5rem;
-            margin-bottom: 0.75rem;
-            border-left: 3px solid #e8c87a;
-        }
-
-        /* Quiz */
-        .quiz-container {
-            margin-top: 1rem;
-        }
-
-        .quiz-question {
-            margin-bottom: 2rem;
-            padding: 1.5rem;
-            background-color: #1a1a22;
-            border-radius: 0.5rem;
-        }
-
-        .quiz-question-text {
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: #e8c87a;
-        }
-
-        .quiz-options {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .quiz-option {
-            padding: 0.75rem 1rem;
-            background-color: #0f0f14;
-            border: 1px solid #2a2a32;
-            border-radius: 0.375rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: left;
-        }
-
-        .quiz-option:hover {
-            border-color: #3a3a42;
-            background-color: #1a1a22;
-        }
-
-        .quiz-option.selected {
-            border-color: #e8c87a;
-            background-color: #1a1a22;
-        }
-
-        .quiz-option.correct {
-            border-color: #4ade80;
-            background-color: rgba(74, 222, 128, 0.1);
-        }
-
-        .quiz-option.incorrect {
-            border-color: #ef4444;
-            background-color: rgba(239, 68, 68, 0.1);
-        }
-
-        /* Action buttons in output */
-        .output-actions {
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid #1a1a22;
-            flex-wrap: wrap;
-        }
-
-        /* Loading state */
-        .loading {
-            text-align: center;
-            padding: 2rem;
-            color: #b0b0b8;
-        }
-
-        .spinner {
-            display: inline-block;
-            width: 2rem;
-            height: 2rem;
-            border: 2px solid #2a2a32;
-            border-top-color: #e8c87a;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin-bottom: 1rem;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Error message */
-        .error-message {
-            padding: 1rem;
-            background-color: rgba(239, 68, 68, 0.1);
-            border: 1px solid #ef4444;
-            border-radius: 0.5rem;
-            color: #fca5a5;
-            margin-bottom: 1rem;
-        }
-
-        /* Success message */
-        .success-message {
-            padding: 1rem;
-            background-color: rgba(74, 222, 128, 0.1);
-            border: 1px solid #4ade80;
-            border-radius: 0.5rem;
-            color: #86efac;
-            margin-bottom: 1rem;
-        }
-
-        /* Paywall styles */
-        .paywall-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(9, 9, 14, 0.95);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            padding: 2rem;
-        }
-
-        .paywall-card {
+        .flashcard-set {
             background-color: #0f0f14;
             border: 1px solid #1a1a22;
-            border-radius: 0.75rem;
-            padding: 3rem 2rem;
-            max-width: 500px;
-            text-align: center;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
         }
 
-        .paywall-card h2 {
-            font-family: 'DM Serif Display', serif;
-            font-size: 2rem;
+        .flashcard {
+            background-color: #14141b;
+            border: 1px solid #1a1a22;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .flashcard:hover {
+            border-color: #2a2a32;
+            background-color: #1a1a22;
+        }
+
+        .flashcard.flipped {
+            background-color: #e8c87a;
+            color: #09090e;
+        }
+
+        .flashcard-word {
+            font-size: 1.5rem;
+            font-weight: 700;
             margin-bottom: 1rem;
         }
 
-        .paywall-card p {
-            color: #b0b0b8;
-            margin-bottom: 2rem;
+        .flashcard-translation {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        .vocab-list {
+            background-color: #0f0f14;
+            border: 1px solid #1a1a22;
+            border-radius: 8px;
+        }
+
+        .vocab-item {
+            padding: 1rem;
+            border-bottom: 1px solid #1a1a22;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .vocab-item:last-child {
+            border-bottom: none;
+        }
+
+        .vocab-word {
+            font-weight: 600;
+            color: #e8c87a;
+        }
+
+        .vocab-translation {
+            color: #a8a8b0;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .page-header h1 {
-                font-size: 2rem;
+            main {
+                padding: 1.5rem 1rem;
             }
 
-            .card-grid.languages,
-            .card-grid.topics {
-                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            h1 {
+                font-size: 1.75rem;
             }
 
-            .card-grid.levels {
-                grid-template-columns: 1fr;
+            .section-title {
+                font-size: 1.25rem;
             }
 
-            .action-section {
-                flex-direction: column;
+            .languages-grid {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
             }
 
-            .btn-primary {
-                min-width: unset;
+            .levels-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
             }
 
-            .tab-nav {
-                gap: 0;
-            }
-
-            .tab-btn {
-                flex: 1;
-                font-size: 0.875rem;
-                padding: 0.5rem 0.75rem;
+            .topics-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
             }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
     <nav>
-        <div class="container">
-            <a href="index.html" class="logo">NocÃ¨ne</a>
-            <div class="credit-badge"><span class="credit-badge-count">0</span> Credits</div>
-        </div>
+        <a href="index.html" class="nav-logo">Noc&#232;ne</a>
+        <div class="credit-badge-count">0 Credits</div>
     </nav>
 
-    <!-- Main content -->
     <main>
-        <div class="container">
-            <!-- Page header -->
-            <div class="page-header">
-                <h1>AI Language Learning Sets</h1>
-                <p>Generate custom vocabulary sets, grammar tips, and quizzes for 12 languages with AI. Learn smarter, not harder.</p>
+        <h1>Language Learning Sets</h1>
+        <p class="subtitle">Create customized flashcard and vocabulary sets for any language</p>
+
+        <!-- Language Selection -->
+        <div class="selection-section">
+            <h2 class="section-title">Select Language</h2>
+            <div class="card-grid languages-grid" id="languagesGrid"></div>
+        </div>
+
+        <!-- Level Selection -->
+        <div class="selection-section">
+            <h2 class="section-title">Select Proficiency Level</h2>
+            <div class="card-grid levels-grid" id="levelsGrid"></div>
+        </div>
+
+        <!-- Topic Selection -->
+        <div class="selection-section">
+            <h2 class="section-title">Select Topic</h2>
+            <div class="card-grid topics-grid" id="topicsGrid"></div>
+        </div>
+
+        <!-- Generate Button -->
+        <div class="generate-section">
+            <button class="generate-btn" id="generateBtn" onclick="generateSets()">Generate Learning Set (1 Credit)</button>
+        </div>
+
+        <!-- Loading State -->
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Creating your learning set...</p>
+        </div>
+
+        <!-- Output Section -->
+        <div class="output-section" id="outputSection">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('flashcards')">Flashcards</button>
+                <button class="tab-btn" onclick="switchTab('vocab')">Vocabulary List</button>
             </div>
 
-            <!-- Selection interface -->
-            <div class="selection-section">
-                <!-- Language selector -->
-                <div class="selector-group">
-                    <label class="selector-label">Select Language</label>
-                    <div class="card-grid languages" id="languageGrid">
-                        <div class="selection-card" data-value="Spanish">Spanish</div>
-                        <div class="selection-card" data-value="French">French</div>
-                        <div class="selection-card" data-value="German">German</div>
-                        <div class="selection-card" data-value="Italian">Italian</div>
-                        <div class="selection-card" data-value="Portuguese">Portuguese</div>
-                        <div class="selection-card" data-value="Japanese">Japanese</div>
-                        <div class="selection-card" data-value="Korean">Korean</div>
-                        <div class="selection-card" data-value="Mandarin">Mandarin</div>
-                        <div class="selection-card" data-value="Arabic">Arabic</div>
-                        <div class="selection-card" data-value="Russian">Russian</div>
-                        <div class="selection-card" data-value="Hindi">Hindi</div>
-                        <div class="selection-card" data-value="Dutch">Dutch</div>
-                    </div>
-                </div>
-
-                <!-- Level selector -->
-                <div class="selector-group">
-                    <label class="selector-label">Select Level</label>
-                    <div class="card-grid levels" id="levelGrid">
-                        <div class="selection-card" data-value="Beginner">Beginner</div>
-                        <div class="selection-card" data-value="Intermediate">Intermediate</div>
-                        <div class="selection-card" data-value="Advanced">Advanced</div>
-                    </div>
-                </div>
-
-                <!-- Topic selector -->
-                <div class="selector-group">
-                    <label class="selector-label">Select Topic</label>
-                    <div class="card-grid topics" id="topicGrid">
-                        <div class="selection-card" data-value="Greetings & Basics">Greetings & Basics</div>
-                        <div class="selection-card" data-value="Food & Dining">Food & Dining</div>
-                        <div class="selection-card" data-value="Travel & Directions">Travel & Directions</div>
-                        <div class="selection-card" data-value="Business & Work">Business & Work</div>
-                        <div class="selection-card" data-value="Family & Relationships">Family & Relationships</div>
-                        <div class="selection-card" data-value="Shopping & Money">Shopping & Money</div>
-                        <div class="selection-card" data-value="Health & Body">Health & Body</div>
-                        <div class="selection-card" data-value="Nature & Weather">Nature & Weather</div>
-                        <div class="selection-card" data-value="Technology & Internet">Technology & Internet</div>
-                        <div class="selection-card" data-value="Culture & Entertainment">Culture & Entertainment</div>
-                    </div>
-                </div>
+            <!-- Flashcards Tab -->
+            <div class="tab-content active" id="flashcardsTab">
+                <div class="flashcard-set" id="flashcardSet"></div>
             </div>
 
-            <!-- Action section -->
-            <div class="action-section">
-                <button class="btn btn-primary" id="generateBtn">Generate Learning Set (1 credit)</button>
-            </div>
-
-            <!-- Output area -->
-            <div class="output-section" id="outputSection">
-                <div id="loadingState" class="loading" style="display: none;">
-                    <div class="spinner"></div>
-                    <p>Generating your learning set...</p>
-                </div>
-
-                <div id="contentState" style="display: none;">
-                    <!-- Tab navigation -->
-                    <div class="tab-nav">
-                        <button class="tab-btn active" data-tab="vocabulary">Vocabulary</button>
-                        <button class="tab-btn" data-tab="sentences">Example Sentences</button>
-                        <button class="tab-btn" data-tab="grammar">Grammar Tips</button>
-                        <button class="tab-btn" data-tab="quiz">Quiz</button>
-                    </div>
-
-                    <!-- Vocabulary tab -->
-                    <div class="tab-content active" id="vocabulary">
-                        <table class="vocab-table">
-                            <thead>
-                                <tr>
-                                    <th>Word</th>
-                                    <th>Pronunciation</th>
-                                    <th>Translation</th>
-                                    <th>Example Sentence</th>
-                                </tr>
-                            </thead>
-                            <tbody id="vocabBody">
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Sentences tab -->
-                    <div class="tab-content" id="sentences">
-                        <div class="sentences-list" id="sentencesList">
-                        </div>
-                    </div>
-
-                    <!-- Grammar tab -->
-                    <div class="tab-content" id="grammar">
-                        <div class="grammar-list" id="grammarList">
-                        </div>
-                    </div>
-
-                    <!-- Quiz tab -->
-                    <div class="tab-content" id="quiz">
-                        <div class="quiz-container" id="quizContainer">
-                        </div>
-                    </div>
-
-                    <!-- Output actions -->
-                    <div class="output-actions">
-                        <button class="btn btn-secondary" id="printBtn">Print / Save as PDF</button>
-                        <button class="btn btn-primary" id="generateAnotherBtn">Generate Another</button>
-                    </div>
-                </div>
+            <!-- Vocabulary Tab -->
+            <div class="tab-content" id="vocabTab">
+                <div class="vocab-list" id="vocabList"></div>
             </div>
         </div>
     </main>
 
-    <!-- Scripts -->
     <script src="credits.js"></script>
     <script src="https://app.lemonsqueezy.com/js/lemon.js" defer></script>
 
     <script>
-        // State management
-        const state = {
-            language: null,
-            level: null,
-            topic: null,
-            data: null
-        };
+        const languages = ['Spanish', 'French', 'German', 'Italian', 'Portuguese', 'Russian', 'Japanese', 'Mandarin'];
+        const levels = ['Beginner', 'Intermediate', 'Advanced', 'Fluent'];
+        const topics = ['Travel', 'Business', 'Food', 'Daily Life', 'Culture', 'Sports', 'Technology', 'Health'];
 
-        // Initialize selection cards
-        function initializeSelectionCards() {
-            document.querySelectorAll('.card-grid').forEach(grid => {
-                grid.addEventListener('click', (e) => {
-                    const card = e.target.closest('.selection-card');
-                    if (!card) return;
+        let selectedLanguage = '';
+        let selectedLevel = '';
+        let selectedTopic = '';
 
-                    const gridId = grid.id;
-                    const value = card.dataset.value;
+        function initializeGrids() {
+            renderGrid('languagesGrid', languages, 'language');
+            renderGrid('levelsGrid', levels, 'level');
+            renderGrid('topicsGrid', topics, 'topic');
+        }
 
-                    // Deselect siblings
-                    grid.querySelectorAll('.selection-card').forEach(c => c.classList.remove('selected'));
-
-                    // Select clicked card
-                    card.classList.add('selected');
-
-                    // Update state
-                    if (gridId === 'languageGrid') state.language = value;
-                    else if (gridId === 'levelGrid') state.level = value;
-                    else if (gridId === 'topicGrid') state.topic = value;
-
-                    updateGenerateButton();
-                });
+        function renderGrid(gridId, items, type) {
+            const grid = document.getElementById(gridId);
+            grid.innerHTML = '';
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.textContent = item;
+                card.onclick = () => selectCard(card, item, type);
+                grid.appendChild(card);
             });
         }
 
-        // Update generate button state
+        function selectCard(element, value, type) {
+            document.querySelectorAll(`#${type === 'language' ? 'languagesGrid' : type === 'level' ? 'levelsGrid' : 'topicsGrid'} .card`).forEach(card => {
+                card.classList.remove('selected');
+            });
+            element.classList.add('selected');
+
+            if (type === 'language') selectedLanguage = value;
+            else if (type === 'level') selectedLevel = value;
+            else if (type === 'topic') selectedTopic = value;
+
+            updateGenerateButton();
+        }
+
         function updateGenerateButton() {
             const btn = document.getElementById('generateBtn');
-            const isComplete = state.language && state.level && state.topic;
-            btn.disabled = !isComplete;
-
-            if (isComplete) {
-                btn.textContent = `Generate Learning Set (1 credit) â ${state.language}, ${state.level}, ${state.topic}`;
-            } else {
-                btn.textContent = 'Generate Learning Set (1 credit)';
-            }
+            btn.disabled = !(selectedLanguage && selectedLevel && selectedTopic);
         }
 
-        // Generate learning set
-        function generateSet() {
-            if (!state.language || !state.level || !state.topic) {
-                alert('Please select language, level, and topic');
-                return;
+        async function generateSets() {
+            if (!selectedLanguage || !selectedLevel || !selectedTopic) return;
+
+            // Check credits
+            if (typeof Nocene !== 'undefined' && Nocene.requireCredit) {
+                if (!Nocene.requireCredit()) {
+                    alert('You don\'t have enough credits.');
+                    return;
+                }
             }
 
+            const loading = document.getElementById('loading');
             const outputSection = document.getElementById('outputSection');
-            const loadingState = document.getElementById('loadingState');
-            const contentState = document.getElementById('contentState');
+            loading.classList.add('active');
+            outputSection.classList.remove('active');
 
-            outputSection.classList.add('active');
-            loadingState.style.display = 'block';
-            contentState.style.display = 'none';
+            try {
+                const systemPrompt = `Create a language learning set with flashcards and vocabulary for ${selectedLanguage} at ${selectedLevel} level on the topic of ${selectedTopic}. Respond ONLY with valid JSON, no additional text:
+{
+  "flashcards": [{"word": "...", "translation": "...", "example": "..."}, ...],
+  "vocabulary": [{"word": "...", "translation": "...", "partOfSpeech": "..."}, ...]
+}`;
 
-            const systemPrompt = `You are an expert language teacher. Generate a comprehensive learning set for ${state.language} at ${state.level} level focused on "${state.topic}".
-
-Output as valid JSON with these exact keys:
-- vocabulary: array of 10 objects with {word, pronunciation, translation, example}
-- sentences: array of 10 objects with {original, translation}
-- grammar: array of 5 tip strings (each 1-2 sentences)
-- quiz: array of 5 objects with {question, options: string[], correct: number (0-3)}
-
-Output ONLY valid JSON, no other text.`;
-
-            const userMessage = `Create a ${state.level} level learning set for ${state.language} about ${state.topic}.`;
-
-            // PRODUCTION: Proxy through backend
-            const apiKey = 'YOUR_API_KEY_HERE';
-
-            fetch('https://api.anthropic.com/v1/messages', {
-                method: 'POST',
-                headers: {
-                    'x-api-key': apiKey,
-                    'anthropic-version': '2023-06-01',
-                    'content-type': 'application/json',
-                    'anthropic-dangerous-direct-browser-access': 'true'
-                },
-                body: JSON.stringify({
-                    model: 'claude-sonnet-4-20250514',
-                    max_tokens: 2000,
-                    system: systemPrompt,
-                    messages: [
-                        {
-                            role: 'user',
-                            content: userMessage
-                        }
-                    ]
-                })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.error) {
-                    throw new Error(data.error.message || 'API error');
-                }
-
-                const content = data.content[0].text;
-                const jsonMatch = content.match(/\{[\s\S]*\}/);
-                if (!jsonMatch) {
-                    throw new Error('Invalid response format');
-                }
-
-                state.data = JSON.parse(jsonMatch[0]);
-                renderOutput();
-
-                loadingState.style.display = 'none';
-                contentState.style.display = 'block';
-            })
-            .catch(err => {
-                console.error('API Error:', err);
-                loadingState.innerHTML = `<div class="error-message">Error: ${err.message}</div>`;
-            });
-        }
-
-        // Render output
-        function renderOutput() {
-            if (!state.data) return;
-
-            // Vocabulary
-            const vocabBody = document.getElementById('vocabBody');
-            vocabBody.innerHTML = '';
-            state.data.vocabulary.forEach(item => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td><strong>${item.word}</strong></td>
-                    <td>${item.pronunciation}</td>
-                    <td>${item.translation}</td>
-                    <td><em>${item.example}</em></td>
-                `;
-                vocabBody.appendChild(row);
-            });
-
-            // Sentences
-            const sentencesList = document.getElementById('sentencesList');
-            sentencesList.innerHTML = '';
-            state.data.sentences.forEach(item => {
-                const div = document.createElement('div');
-                div.className = 'sentence-item';
-                div.innerHTML = `
-                    <div class="sentence-original">${item.original}</div>
-                    <div class="sentence-translation">${item.translation}</div>
-                `;
-                sentencesList.appendChild(div);
-            });
-
-            // Grammar
-            const grammarList = document.getElementById('grammarList');
-            grammarList.innerHTML = '';
-            state.data.grammar.forEach(tip => {
-                const div = document.createElement('div');
-                div.className = 'grammar-item';
-                div.textContent = tip;
-                grammarList.appendChild(div);
-            });
-
-            // Quiz
-            const quizContainer = document.getElementById('quizContainer');
-            quizContainer.innerHTML = '';
-            state.data.quiz.forEach((q, idx) => {
-                const div = document.createElement('div');
-                div.className = 'quiz-question';
-                div.innerHTML = `
-                    <div class="quiz-question-text">${idx + 1}. ${q.question}</div>
-                    <div class="quiz-options">
-                        ${q.options.map((opt, i) => `
-                            <div class="quiz-option" data-index="${i}" data-question="${idx}">
-                                ${String.fromCharCode(65 + i)}) ${opt}
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
-                quizContainer.appendChild(div);
-            });
-
-            // Quiz option click handlers
-            document.querySelectorAll('.quiz-option').forEach(opt => {
-                opt.addEventListener('click', (e) => {
-                    const idx = parseInt(opt.dataset.question);
-                    const selected = parseInt(opt.dataset.index);
-                    const correct = state.data.quiz[idx].correct;
-
-                    document.querySelectorAll(`[data-question="${idx}"]`).forEach(o => {
-                        o.classList.remove('selected', 'correct', 'incorrect');
-                    });
-
-                    if (selected === correct) {
-                        opt.classList.add('correct');
-                    } else {
-                        opt.classList.add('incorrect');
-                        document.querySelector(`[data-question="${idx}"][data-index="${correct}"]`).classList.add('correct');
-                    }
+                const response = await fetch('/api/generate', {
+                    method: 'POST',
+                    headers: { 'content-type': 'application/json' },
+                    body: JSON.stringify({
+                        model: 'claude-sonnet-4-20250514',
+                        max_tokens: 2000,
+                        system: systemPrompt,
+                        messages: [{ role: 'user', content: 'Generate the language learning set' }]
+                    })
                 });
+
+                if (!response.ok) throw new Error('API error');
+                const data = await response.json();
+                const content = data.content || data.text || '';
+                const jsonMatch = content.match(/\{[\s\S]*\}/);
+                if (!jsonMatch) throw new Error('Invalid format');
+
+                const sets = JSON.parse(jsonMatch[0]);
+                displaySets(sets);
+                loading.classList.remove('active');
+                outputSection.classList.add('active');
+            } catch (error) {
+                loading.classList.remove('active');
+                alert('Error: ' + error.message);
+            }
+        }
+
+        function displaySets(sets) {
+            // Display flashcards
+            const flashcardSet = document.getElementById('flashcardSet');
+            flashcardSet.innerHTML = '';
+            sets.flashcards.forEach((card, index) => {
+                const flashcard = document.createElement('div');
+                flashcard.className = 'flashcard';
+                flashcard.innerHTML = `<div class="flashcard-word">${card.word}</div><div class="flashcard-translation">${card.translation}</div><div style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.6;"><em>${card.example || ''}</em></div>`;
+                flashcard.onclick = () => flashcard.classList.toggle('flipped');
+                flashcardSet.appendChild(flashcard);
+            });
+
+            // Display vocabulary
+            const vocabList = document.getElementById('vocabList');
+            vocabList.innerHTML = '';
+            sets.vocabulary.forEach(item => {
+                const vocabItem = document.createElement('div');
+                vocabItem.className = 'vocab-item';
+                vocabItem.innerHTML = `<div><div class="vocab-word">${item.word}</div><div class="vocab-translation">${item.translation}</div></div><div style="font-size: 0.85rem; color: #5a5a62;">${item.partOfSpeech || ''}</div>`;
+                vocabList.appendChild(vocabItem);
             });
         }
 
-        // Tab switching
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const tabName = btn.dataset.tab;
-
-                // Deactivate all tabs
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-
-                // Activate selected tab
-                btn.classList.add('active');
-                document.getElementById(tabName).classList.add('active');
-            });
-        });
-
-        // Print / Save as PDF
-        document.getElementById('printBtn').addEventListener('click', () => {
-            const printWindow = window.open('', '_blank');
-            printWindow.document.write(`
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <title>Learning Set - ${state.language}</title>
-                    <style>
-                        body { font-family: Arial, sans-serif; margin: 2rem; color: #333; background: white; }
-                        h1, h2 { color: #333; border-bottom: 2px solid #ddd; padding-bottom: 0.5rem; }
-                        table { width: 100%; border-collapse: collapse; margin-bottom: 2rem; }
-                        th, td { padding: 0.75rem; text-align: left; border-bottom: 1px solid #ddd; }
-                        th { background: #f5f5f5; font-weight: bold; }
-                        .section { margin-bottom: 2rem; page-break-inside: avoid; }
-                        .item { margin-bottom: 1rem; padding: 0.75rem; background: #f9f9f9; border-left: 3px solid #e8c87a; }
-                        .original { font-weight: bold; }
-                        .translation { color: #666; margin-top: 0.25rem; }
-                    </style>
-                </head>
-                <body>
-                    <h1>${state.language} - ${state.level} - ${state.topic}</h1>
-
-                    <div class="section">
-                        <h2>Vocabulary</h2>
-                        <table>
-                            <thead>
-                                <tr><th>Word</th><th>Pronunciation</th><th>Translation</th><th>Example</th></tr>
-                            </thead>
-                            <tbody>
-                                ${state.data.vocabulary.map(v => `
-                                    <tr>
-                                        <td>${v.word}</td>
-                                        <td>${v.pronunciation}</td>
-                                        <td>${v.translation}</td>
-                                        <td>${v.example}</td>
-                                    </tr>
-                                `).join('')}
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="section">
-                        <h2>Example Sentences</h2>
-                        ${state.data.sentences.map(s => `
-                            <div class="item">
-                                <div class="original">${s.original}</div>
-                                <div class="translation">${s.translation}</div>
-                            </div>
-                        `).join('')}
-                    </div>
-
-                    <div class="section">
-                        <h2>Grammar Tips</h2>
-                        ${state.data.grammar.map(g => `
-                            <div class="item">${g}</div>
-                        `).join('')}
-                    </div>
-
-                    <div class="section">
-                        <h2>Quiz</h2>
-                        ${state.data.quiz.map((q, i) => `
-                            <div class="item">
-                                <div class="original">${i + 1}. ${q.question}</div>
-                                <div style="margin-top: 0.5rem;">
-                                    ${q.options.map((o, j) => `
-                                        <div>${String.fromCharCode(65 + j)}) ${o}${j === q.correct ? ' â' : ''}</div>
-                                    `).join('')}
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                </body>
-                </html>
-            `);
-            printWindow.document.close();
-            printWindow.print();
-        });
-
-        // Generate another
-        document.getElementById('generateAnotherBtn').addEventListener('click', () => {
-            state.data = null;
-            document.getElementById('outputSection').classList.remove('active');
-            generateSet();
-        });
-
-        // Generate button click handler
-        document.getElementById('generateBtn').addEventListener('click', () => {
-            if (state.language && state.level && state.topic) {
-                Nocene.requireCredit(() => generateSet());
-            }
-        });
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            event.target.classList.add('active');
+        }
 
         // Initialize on load
-        initializeSelectionCards();
-        updateGenerateButton();
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeGrids();
+            updateGenerateButton();
+
+            if (typeof Nocene !== 'undefined' && Nocene.onCreditChange) {
+                Nocene.onCreditChange(() => {
+                    updateCreditBadge();
+                });
+            }
+        });
+
+        function updateCreditBadge() {
+            const badge = document.querySelector('.credit-badge-count');
+            if (typeof Nocene !== 'undefined' && Nocene.getCredits) {
+                const credits = Nocene.getCredits();
+                badge.textContent = credits + ' Credits';
+            }
+        }
+
+        // Auto-update credits
+        if (typeof Nocene !== 'undefined' && Nocene.onCreditChange) {
+            Nocene.onCreditChange(() => {
+                updateCreditBadge();
+            });
+        }
     </script>
 </body>
 </html>
