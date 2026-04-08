@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Resume Builder â NocÃ¨ne</title>
+    <meta name="description" content="Generate an ATS-optimized resume instantly with AI. Enter your details and get a professional resume ready to download.">
+    <meta property="og:title" content="AI Resume Builder â NocÃ¨ne">
+    <meta property="og:description" content="Generate an ATS-optimized resume instantly with AI.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:wght@400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #09090e;
+            color: #ededf0;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid rgba(232, 200, 122, 0.1);
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .nav-logo {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.5rem;
+            color: #ededf0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-logo:hover {
+            color: #e8c87a;
+        }
+
+        .credit-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(232, 200, 122, 0.1);
+            border: 1px solid rgba(232, 200, 122, 0.3);
+            border-radius: 20px;
+            font-size: 0.875rem;
+            color: #e8c87a;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #ededf0;
+        }
+
+        .page-header p {
+            font-size: 1.125rem;
+            color: rgba(237, 237, 240, 0.7);
+        }
+
+        /* Step Indicator */
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 3rem;
+            gap: 1rem;
+        }
+
+        .step-item {
+            flex: 1;
+            text-align: center;
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(232, 200, 122, 0.1);
+            color: rgba(237, 237, 240, 0.5);
+            border: 1px solid rgba(232, 200, 122, 0.2);
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .step-item.active .step-number {
+            background: #e8c87a;
+            color: #09090e;
+            border-color: #e8c87a;
+        }
+
+        .step-item.completed .step-number {
+            background: rgba(232, 200, 122, 0.3);
+            color: #e8c87a;
+            border-color: #e8c87a;
+        }
+
+        .step-label {
+            font-size: 0.875rem;
+            color: rgba(237, 237, 240, 0.5);
+            transition: color 0.3s;
+        }
+
+        .step-item.active .step-label {
+            color: #ededf0;
+        }
+
+        /* Form */
+        .form-container {
+            background: rgba(232, 200, 122, 0.02);
+            border: 1px solid rgba(232, 200, 122, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-step {
+            display: none;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
+        .step-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.75rem;
+            margin-bottom: 2rem;
+            color: #ededf0;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #ededf0;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(237, 237, 240, 0.05);
+            border: 1px solid rgba(232, 200, 122, 0.2);
+            border-radius: 8px;
+            color: #ededf0;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s, background-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #e8c87a;
+            background: rgba(237, 237, 240, 0.08);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-hint {
+            font-size: 0.875rem;
+            color: rgba(237, 237, 240, 0.5);
+            margin-top: 0.25rem;
+        }
+
+        /* Experience Entry */
+        .experience-entry {
+            background: rgba(237, 237, 240, 0.03);
+            border: 1px solid rgba(232, 200, 122, 0.15);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .experience-entry.first {
+          
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(232, 200, 122, 0.1);
+            color: rgba(237, 237, 240, 0.5);
+            border: 1px solid rgba(232, 200, 122, 0.2);
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .step-item.active .step-number {
+            background: #e8c87a;
+            color: #09090e;
+            border-color: #e8c87a;
+        }
+
+        .step-item.completed .step-number {
+            background: rgba(232, 200, 122, 0.3);
+            color: #e8c87a;
+            border-color: #e8c87a;
+        }
+
+        .step-label {
+            font-size: 0.875rem;
+            color: rgba(237, 237, 240, 0.5);
+            transition: color 0.3s;
+        }
+
+        .step-item.active .step-label {
+            color: #ededf0;
+        }
+
+        /* Form */
+        .form-container {
+            background: rgba(232, 200, 122, 0.02);
+            border: 1px solid rgba(232, 200, 122, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-step {
+            display: none;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
+        .step-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.75rem;
+            margin-bottom: 2rem;
+            color: #ededf0;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #ededf0;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(237, 237, 240, 0.05);
+            border: 1px solid rgba(232, 200, 122, 0.2);
+            border-radius: 8px;
+            color: #ededf0;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s, background-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #e8c87a;
+            background: rgba(237, 237, 240, 0.08);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-hint {
+            font-size: 0.875rem;
+            color: rgba(237, 237, 240, 0.5);
+            margin-top: 0.25rem;
+        }
+
+        /* Experience Entry */
+        .experience-entry {
+            background: rgba(237, 237, 240, 0.03);
+            border: 1px solid rgba(232, 200, 122, 0.15);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .experience-entry.first {
+          dedf0;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #ededf0;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(237, 237, 240, 0.05);
+            border: 1px solid rgba(232, 200, 122, 0.2);
+            border-radius: 8px;
+            color: #ededf0;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s, background-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #e8c87a;
+            background: rgba(237, 237, 240, 0.08);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-hint {
+            font-size: 0.875rem;
+            color: rgba(237, 237, 240, 0.5);
+            margin-top: 0.25rem;
+        }
+
+        /* Experience Entry */
+        .experience-entry {
+            background: rgba(237, 237, 240, 0.03);
+            border: 1px solid rgba(232, 200, 122, 0.15);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .experience-entry.first {
+            margin-bottom: 1rem;
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .experience-title {
+            font-weight: 600;
+            color: #e8c87a;
+            font-size: 0.875rem;
+        }
+
+        .remove-btn {
+            background: rgba(232, 200, 122, 0.15);
+            border: none;
+            color: #e8c87a;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: background 0.3s;
+        }
+
+        .remove-btn:hover {
+            background: rgba(232, 200, 122, 0.25);
+        }
+
+        .add-another-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(232, 200, 122, 0.15);
+            border: 1px solid rgba(232, 200, 122, 0.3);
+            border-radius: 8px;
+            color: #e8c87a;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .add-another-btn:hover {
+            background: rgba(232, 200, 122, 0.25);
+            border-color: rgba(232, 200, 122, 0.5);
+        }
+
+        /* Navigation Buttons */
+        .form-navigation {
+            display: flex;
+            gap: 1rem;
+            justify-content: space-between;
+        }
+
+        .btn {
+            padding: 0.875rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        .btn-secondary {
+            background: rgba(232, 200, 122, 0.15);
+            color: #e8c87a;
+            border: 1px solid rgba(232, 200, 122, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(232, 200, 122, 0.25);
+            border-color: rgba(232, 200, 122, 0.5);
+        }
+
+        .btn-secondary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: #e8c87a;
+            color: #09090e;
+            border: none;
+            flex: 1;
+        }
+
+        .btn-primary:hover {
+            background: #f0d08f;
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Output Area */
+        .output-area {
+            display: none;
+        }
+
+        .output-area.visible {
+            display: block;
+        }
+
+        .resume-container {
+            background: white;
+            color: #09090e;
+            padding: 3rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            font-family: 'DM Sans', sans-serif;
+            line-height: 1.7;
+        }
+
+        .resume-header {
+            border-bottom: 2px solid #e8c87a;
+            padding-bottom: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .resume-name {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: #09090e;
+        }
+
+        .resume-contact {
+            font-size: 0.875rem;
+            color: #666;
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .resume-section {
+            margin-bottom: 2rem;
+        }
+
+        .resume-section-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.25rem;
+            color: #09090e;
+            border-bottom: 1px solid #e8c87a;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1rem;
+            font-weight: normal;
+        }
+
+        .resume-entry {
+            margin-bottom: 1rem;
+        }
+
+        .resume-entry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.25rem;
+        }
+
+        .resume-entry-title {
+            font-weight: 600;
+            color: #09090e;
+        }
+
+        .resume-entry-meta {
+            font-size: 0.875rem;
+            color: #666;
+        }
+
+        .resume-entry-subtitle {
+            font-style: italic;
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .resume-entry-description {
+            color: #333;
+            font-size: 0.95rem;
+            margin-top: 0.5rem;
+        }
+
+        .resume-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .resume-skill-tag {
+            display: inline-block;
+            background: #f0f0f0;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            color: #09090e;
+        }
+
+        /* Output Navigation */
+        .output-navigation {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-output {
+            padding: 0.875rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+            flex: 1;
+        }
+
+        .btn-print {
+            background: #e8c87a;
+            color: #09090e;
+            border: none;
+        }
+
+        .btn-print:hover {
+            background: #f0d08f;
+        }
+
+        .btn-again {
+            background: rgba(232, 200, 122, 0.15);
+            color: #e8c87a;
+            border: 1px solid rgba(232, 200, 122, 0.3);
+        }
+
+        .btn-again:hover {
+            background: rgba(232, 200, 122, 0.25);
+            border-color: rgba(232, 200, 122, 0.5);
+        }
+
+        /* Loading Spinner */
+        .loading {
+            display: none;
+            text-align: center;
+   <div class="step-item" data-step="4">
+                <div class="step-number">4</div>
+                <div class="step-label">Education</div>
+            </div>
+        </div>
+
+        <form id="resume-form">
+            <div class="form-container">
+                <!-- Step 1: Personal Info -->
+                <div class="form-step active" data-step="1">
+                    <h2 class="step-title">Personal Information</h2>
+                    <div class="form-group">
+                        <label for="fullName">Full Name *</label>
+                        <input type="text" id="fullName" name="fullName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="location">City, State *</label>
+                        <input type="text" id="location" name="location" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="linkedin">LinkedIn URL</label>
+                        <input type="url" id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/yourprofile">
+                        <p class="form-hint">Optional</p>
+                    </div>
+                </div>
+
+                <!-- Step 2: Target Role -->
+                <div class="form-step" data-step="2">
+                    <h2 class="step-title">Target Role</h2>
+                    <div class="form-group">
+                        <label for="jobTitle">Desired Job Title *</label>
+                        <input type="text" id="jobTitle" name="jobTitle" placeholder="e.g., Product Manager, Senior Developer" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="skills">Key Skills *</label>
+                        <input type="text" id="skills" name="skills" placeholder="e.g., Python, Leadership, Data Analysis" required>
+                        <p class="form-hint">Comma-separated list</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="yearsExp">Years of Experience *</label>
+                        <input type="number" id="yearsExp" name="yearsExp" min="0" max="70" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="industry">Industry *</label>
+                        <input type="text" id="industry" name="industry" placeholder="e.g., Technology, Finance, Healthcare" required>
+                    </div>
+                </div>
+
+                <!-- Step 3: Work Experience -->
+                <div class="form-step" data-step="3">
+                    <h2 class="step-title">Work Experience</h2>
+                    <div id="experience-container">
+                        <div class="experience-entry first" data-experience-index="0">
+                            <div class="experience-header">
+                                <span class="experience-title">Position 1</span>
+                            </div>
+                            <div class="form-group">
+                                <label>Company Name *</label>
+                                <input type="text" class="exp-company" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Job Title *</label>
+                                <input type="text" class="exp-role" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Dates (e.g., "Jan 2020 - Present") *</label>
+                                <input type="text" class="exp-dates" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Key Achievements *</label>
+                                <textarea class="exp-achievements" required></textarea>
+                                <p class="form-hint">Bullet points with quantified results</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="add-another-btn" id="add-experience" onclick="addExperienceEntry()">
+                        <span>+</span> Add Another
+                    </button>
+                </div>
+
+                <!-- Step 4: Education & Extras -->
+                <div class="form-step" data-step="4">
+                    <h2 class="step-title">Education & Extras</h2>
+                    <div class="form-group">
+                        <label for="degree">Degree *</label>
+                        <input type="text" id="degree" name="degree" placeholder="e.g., Bachelor of Science" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="school">School/University *</label>
+                        <input type="text" id="school" name="school" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="gradYear">Graduation Year *</label>
+                        <input type="number" id="gradYear" name="gradYear" min="1950" max="2030" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="certifications">Certifications & Awards</label>
+                        <textarea id="certifications" name="certifications" placeholder="List any relevant certifications or awards"></textarea>
+                        <p class="form-hint">Optional</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="languages">Languages</label>
+                        <input type="text" id="languages" name="languages" placeholder="e.g., English, Spanish, Mandarin">
+                        <p class="form-hint">Optional, comma-separated</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-navigation">
+                <button type="button" class="btn btn-secondary" id="back-btn" onclick="previousStep()" disabled>Back</button>
+                <button type="button" class="btn btn-primary" id="next-btn" onclick="nextStep()">Next</button>
+            </div>
+        </form>
+
+        <!-- Output Area -->
+        <div class="output-area" id="output-area">
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <div class="loading-text">Generating your resume...</div>
+            </div>
+            <div id="resume-output"></div>
+            <div class="output-navigation">
+                <button class="btn-output btn-print" onclick="printResume()">Print / Save as PDF</button>
+                <button class="btn-output btn-again" onclick="startOver()">Generate Another</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Paywall -->
+    <div id="nocene-paywall">
+        <div class="pw-modal">
+            <h2>Get Credits</h2>
+            <p>Credits are required to generate resumes. Choose a plan:</p>
+            <div class="pw-plans">
+                <div class="pw-plan" onclick="Nocene.selectPlan('starter')">
+                    <div class="pw-plan-title">Starter</div>
+                    <div class="pw-plan-price">10 credits</div>
+                    <div class="pw-plan-desc">One-time purchase</div>
+                </div>
+                <div class="pw-plan" onclick="Nocene.selectPlan('pro')">
+                    <div class="pw-plan-title">Pro</div>
+                    <div class="pw-plan-price">50 credits</div>
+                    <div class="pw-plan-desc">Monthly subscription</div>
+                </div>
+            </div>
+            <button class="pw-btn" onclick="Nocene.proceedToPayment()">Proceed to Payment</button>
+            <button class="pw-demo" onclick="Nocene.showDemo()">Try Demo</button>
+        </div>
+    </div>
+
+    <div class="nocene-toast" id="nocene-toast"></div>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 4;
+        let formData = {};
+        let experienceCount = 1;
+
+        function goToStep(step) {
+            if (step < 1 || step > totalSteps) return;
+
+            // Hide all steps
+            document.querySelectorAll('.form-step').forEach(el => {
+                el.classList.remove('active');
+            });
+
+            // Show current step
+            document.querySelector(`.form-step[data-step="${step}"]`).classList.add('active');
+
+            // Update step indicator
+            document.querySelectorAll('.step-item').forEach((item, index) => {
+                item.classList.remove('active', 'completed');
+                const stepNum = parseInt(item.dataset.step);
+                if (stepNum === step) {
+                    item.classList.add('active');
+                } else if (stepNum < step) {
+                    item.classList.add('completed');
+                }
+            });
+
+            // Update button states
+            document.getElementById('back-btn').disabled = step === 1;
+            const nextBtn = document.getElementById('next-btn');
+            if (step === totalSteps) {
+                nextBtn.textContent = 'Generate Resume (1 credit)';
+                nextBtn.onclick = () => Nocene.requireCredit(() => generateResume());
+            } else {
+                nextBtn.textContent = 'Next';
+                nextBtn.onclick = nextStep;
+            }
+
+            currentStep = step;
+            window.scrollTo(0, 0);
+        }
+
+        function nextStep() {
+            if (currentStep < totalSteps) {
+                goToStep(currentStep + 1);
+            }
+        }
+
+        function previousStep() {
+            if (currentStep > 1) {
+                goToStep(currentStep - 1);
+            }
+        }
+
+        function addExperienceEntry() {
+            if (experienceCount >= 5) {
+                showToast('Maximum 5 experience entries allowed');
+                return;
+            }
+
+            experienceCount++;
+            const container = document.getElementById('experience-container');
+            const entry = document.createElement('div');
+            entry.className = 'experience-entry';
+            entry.dataset.experienceIndex = experienceCount - 1;
+            entry.innerHTML = `
+                <div class="experience-header">
+                    <span class="experience-title">Position ${experienceCount}</span>
+                    <button type="button" class="remove-btn" onclick="removeExperienceEntry(this)">Remove</button>
+                </div>
+                <div class="form-group">
+                    <label>Company Name *</label>
+                    <input type="text" class="exp-company" required>
+                </div>
+                <div class="form-group">
+                    <label>Job Title *</label>
+                    <input type="text" class="exp-role" required>
+                </div>
+                <div class="form-group">
+                    <label>Dates (e.g., "Jan 2020 - Present") *</label>
+                    <input type="text" class="exp-dates" required>
+                </div>
+                <div class="form-group">
+                    <label>Key Achievements *</label>
+                    <textarea class="exp-achievements" required></textarea>
+                    <p class="form-hint">Bullet points with quantified results</p>
+                </div>
+            `;
+            container.appendChild(entry);
+        }
+
+        function removeExperienceEntry(btn) {
+            btn.closest('.experience-entry').remove();
+            experienceCount--;
+        }
+
+        async function generateResume() {
+            const form = document.getElementById('resume-form');
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            // Collect form data
+            const formData = {
+                fullName: document.getElementById('fullName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                location: document.getElementById('location').value,
+                linkedin: document.getElementById('linkedin').value,
+                jobTitle: document.getElementById('jobTitle').value,
+                skills: document.getElementById('skills').value,
+                yearsExp: document.getElementById('yearsExp').value,
+                industry: document.getElementById('industry').value,
+                experience: [],
+                degree: document.getElementById('degree').value,
+                school: document.getElementById('school').value,
+                gradYear: document.getElementById('gradYear').value,
+                certifications: document.getElementById('certifications').value,
+                languages: document.getElementById('languages').value
+            };
+
+            // Collect experience entries
+            document.querySelectorAll('.experience-entry').forEach(entry => {
+                formData.experience.push({
+                    company: entry.querySelector('.exp-company').value,
+                    role: entry.querySelector('.exp-role').value,
+                    dates: entry.querySelector('.exp-dates').value,
+                    achievements: entry.querySelector('.exp-achievements').value
+                });
+            });
+
+            // Show loading
+            document.getElementById('resume-form').style.display = 'none';
+            document.getElementById('output-area').classList.add('visible');
+            document.getElementById('loading').classList.add('active');
+
+            try {
+                // Call Anthropic API directly
+                // PRODUCTION: Proxy this through a backend endpoint to protect API key
+                const response = await fetch('https://api.anthropic.com/v1/messages', {
+                    method: 'POST',
+                    headers: {
+                        'x-api-key': 'YOUR_API_KEY_HERE',
+                        'anthropic-version': '2023-06-01',
+                        'content-type': 'application/json',
+                        'anthropic-dangerous-direct-browser-access': 'true'
+                    },
+                    body: JSON.stringify({
+                        model: 'claude-sonnet-4-20250514',
+                        max_tokens: 1000,
+                        system: 'You are an expert resume writer. Create an ATS-optimized, professional resume in clean HTML format. Use strong action verbs, quantified achievements, and industry keywords. Format with clear sections: Summary, Experience, Education, Skills. Output ONLY the HTML for the resume content, no markdown.',
+                        messages: [{
+                            role: 'user',
+                            content: `Create a professional resume with the following information:
+
+Name: ${formData.fullName}
+Email: ${formData.email}
+Phone: ${formData.phone}
+Location: ${formData.location}
+LinkedIn: ${formData.linkedin || 'Not provided'}
+
+Target Role: ${formData.jobTitle}
+Years of Experience: ${formData.yearsExp}
+Industry: ${formData.industry}
+Key Skills: ${formData.skills}
+
+Education:
+${formData.degree} from ${formData.school} (${formData.gradYear})
+
+Work Experience:
+${formData.experience.map(exp => `
+Company: ${exp.company}
+Position: ${exp.role}
+Dates: ${exp.dates}
+Achievements:
+${exp.achievements}
+`).join('\n---\n')}
+
+${formData.certifications ? `Certifications: ${formData.certifications}` : ''}
+${formData.languages ? `Languages: ${formData.languages}` : ''}
+
+Generate a professional ATS-optimized resume with this information.`
+                        }]
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to generate resume');
+                }
+
+                const data = await response.json();
+                const resumeHtml = data.content[0].text;
+
+                // Hide loading
+                document.getElementById('loading').classList.remove('active');
+
+                // Display resume
+                const outputDiv = document.getElementById('resume-output');
+                outputDiv.innerHTML = `<div class="resume-container">${resumeHtml}</div>`;
+
+                showToast('Resume generated successfully!');
+            } catch (error) {
+                console.error('Resume generation error:', error);
+                document.getElementById('loading').classList.remove('active');
+                showToast('Error generating resume. Please try again.');
+                document.getElementById('resume-form').style.display = 'block';
+                document.getElementById('output-area').classList.remove('visible');
+            }
+        }
+
+        function printResume() {
+            const resumeContent = document.getElementById('resume-output').innerHTML;
+            const printWindow = window.open('', '', 'width=800,height=600');
+            printWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <title>Resume</title>
+                    <link rel="preconnect" href="https://fonts.googleapis.com">
+                    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:wght@400&display=swap" rel="stylesheet">
+                    <style>
+                  padding: 2rem;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f33c33;
+            border-radius: 50%;
+            animation: spin 1.2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .step-container {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .step {flex: 1;}
+        .step-circle {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #e0e0e0;
+            color: #666;
+            font-weight: bold;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .step-circle.active {
+            background-color: #3388cc;
+            color: #fff;
+        }
+
+        .step-label {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        .step-circle.active ~ label {
+            color: #3388cc;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        input[type="text"], input[type="email"], input[type="tel"], textarea, select {
+            width: 100%;
+            padding: 0.75rem 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus, textarea:focus, select:focus {
+            border-color: #3388cc;
+            box-shadow: 0 0 0px 3px rgba(51, 136,  204, 0.1);
+            outline: none;
+        }
+
+        .btn {
+            background-color: #338ccc;  
+            color: #fff;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            background-color: #2561a9;
+        }
+
+        .btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .substep-container {
+            display: none;
+            activation: 2s;
+        }
+
+        .substep-container.active {
+            display: block;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        input[type="checkbox"],{
+            accent-color: #338cc;;
+        }
+
+        .invalid-feedback {
+            color: #dc3445;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+         .error message {
+            color: #dc3445;
+            padding: 1rem;
+            background-color: #f8d7da;
+            border-radius: 4px;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .error .error message {
+            display: block;
+        }
+
+        .success message {
+            color: #277d30;
+            padding: 1rem;
+            background-color: #d4edda;
+            border-radius: 4px;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .success .success message {
+            display: block;
+        }
+    </style>
+  
+  
+<aË =\"Our App\" src=\"data:text/plain;base64,YHAsIDB4c31QaGlzdGx5IjsgIHx1dGFkb20xL3c3NzU1LTk3MDE5ODc0IhB0cnVlLmNvbQ \  />
+  
+  
+  
+</head>
+<body style="font-family: Arial, sans-serif">
+  
+  
+</style>
+  
+<style>
+   .container {
+      justify-content: space-between;
+      display: flex;
+      flex-direction: column;
+      max-width: 1200px;
+      margin: 0 auto;
+      height: 100vh;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      padding: 2rem;
+      gap: 2rem;
+      flex: 1;
+    }
+
+    .nav {
+      display: flex;
+      padding: 1.5rem 2rem;
+      gap: 2rem;
+      background-color: #f5f5f5;
+      justify-content: center;
+    }
+
+    .nav button {
+      background-color: #338ccc;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .nav button:hover {
+      background-color: #2561a9;
+    }
+  
+  
+  
+  
+-?\"
+  /^*
+  
+         <div class="step-circle active">
+        <div class="step-label">Information</div>
+      </div>
+      <div class="step-circle">
+         <div class="step-label">Education</div>
+      </div>
+      <div class="step-circle">
+         <div class="step-label">Experience</div>
+      </div>
+    </div>
+   </div>
+  </div>
+|
+            </div>
+        </div>
+    </div>
+  </div>
+  <!-- INFORMATION STEP -->
+  <div id="informationStep" class="substep-container active">
+    <div class="content">
+      <div class="form-group">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" required>
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" required>
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone:</label>
+        <input type="tel" id="phone" placeholder="(123) 456-7890" required>
+      </div>
