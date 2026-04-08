@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Prompt Generator | Noc&#232;ne</title>
+    <title>AI Prompt Packs | Noc&#232;ne</title>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:wght@400&display=swap" rel="stylesheet">
     <style>
         * {
@@ -12,412 +12,749 @@
             box-sizing: border-box;
         }
 
-        html, body {
+        body {
+            font-family: 'DM Sans', sans-serif;
             background-color: #09090e;
             color: #ededf0;
-            font-family: 'DM Sans', sans-serif;
             line-height: 1.6;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
 
-        /* Navigation */
-        nav {
-            background-color: #0f0f14;
-            border-bottom: 1px solid #1a1a22;
-            padding: 1.25rem 2rem;
+        header {
+            padding: 2rem;
+            border-bottom: 1px solid rgba(232, 200, 122, 0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .nav-logo {
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo {
             font-family: 'DM Serif Display', serif;
             font-size: 1.5rem;
             font-weight: 400;
+            color: #e8c87a;
             text-decoration: none;
-            color: #ededf0;
-            transition: color 0.3s ease;
+            transition: opacity 0.3s ease;
         }
 
-        .nav-logo:hover {
-            color: #e8c87a;
+        .logo:hover {
+            opacity: 0.8;
+        }
+
+        .nav-title {
+            font-size: 1.125rem;
+            font-weight: 500;
+            color: #ededf0;
         }
 
         .credit-badge-count {
-            background-color: #1a1a22;
-            border: 1px solid #2a2a32;
+            background-color: rgba(232, 200, 122, 0.1);
+            color: #e8c87a;
             padding: 0.5rem 1rem;
-            border-radius: 6px;
+            border-radius: 9999px;
             font-size: 0.875rem;
-            color: #ededf0;
+            font-weight: 600;
+            border: 1px solid rgba(232, 200, 122, 0.3);
         }
 
-        /* Main Container */
         main {
             flex: 1;
-            max-width: 1000px;
-            margin: 0 auto;
             padding: 3rem 2rem;
-            width: 100%;
         }
 
-        h1 {
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .page-title {
             font-family: 'DM Serif Display', serif;
             font-size: 2.5rem;
             font-weight: 400;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
+            color: #ededf0;
         }
 
-        .subtitle {
-            color: #a8a8b0;
-            margin-bottom: 3rem;
+        .page-subtitle {
             font-size: 1rem;
+            color: rgba(237, 237, 240, 0.7);
+            margin-bottom: 3rem;
         }
 
-        /* Input Section */
-        .input-section {
-            background-color: #0f0f14;
-            border: 1px solid #1a1a22;
+        .selection-container {
+            border: 1px solid rgba(232, 200, 122, 0.2);
             border-radius: 12px;
             padding: 2rem;
+            background-color: rgba(9, 9, 14, 0.5);
             margin-bottom: 2rem;
         }
 
-        .form-group {
-            margin-bottom: 1.5rem;
+        .selection-section {
+            margin-bottom: 2.5rem;
         }
 
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
+        .selection-section:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .selection-label {
+            font-size: 0.875rem;
             font-weight: 600;
-            color: #ededf0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: rgba(232, 200, 122, 0.8);
+            margin-bottom: 1rem;
+            display: block;
         }
 
-        textarea {
-            width: 100%;
+        .niche-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .niche-card {
             padding: 1rem;
-            background-color: #14141b;
-            border: 1px solid #1a1a22;
+            border: 1px solid rgba(232, 200, 122, 0.2);
             border-radius: 8px;
+            background-color: rgba(237, 237, 240, 0.05);
             color: #ededf0;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 1rem;
-            min-height: 120px;
-            resize: vertical;
+            cursor: pointer;
             transition: all 0.3s ease;
+            text-align: center;
+            font-size: 0.875rem;
+            font-weight: 500;
         }
 
-        textarea:focus {
-            outline: none;
-            border-color: #2a2a32;
-            background-color: #1a1a22;
+        .niche-card:hover {
+            border-color: rgba(232, 200, 122, 0.5);
+            background-color: rgba(232, 200, 122, 0.05);
         }
 
-        select {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            background-color: #14141b;
-            border: 1px solid #1a1a22;
-            border-radius: 8px;
+        .niche-card.selected {
+            background-color: rgba(232, 200, 122, 0.2);
+            border-color: #e8c87a;
             color: #ededf0;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 1rem;
+        }
+
+        .pills-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .pill {
+            padding: 0.625rem 1.25rem;
+            border: 1px solid rgba(232, 200, 122, 0.2);
+            border-radius: 9999px;
+            background-color: rgba(237, 237, 240, 0.05);
+            color: #ededf0;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 500;
             transition: all 0.3s ease;
+            white-space: nowrap;
         }
 
-        select:focus {
-            outline: none;
-            border-color: #2a2a32;
-            background-color: #1a1a22;
+        .pill:hover {
+            border-color: rgba(232, 200, 122, 0.5);
+            background-color: rgba(232, 200, 122, 0.05);
         }
 
-        /* Button */
+        .pill.selected {
+            background-color: #e8c87a;
+            border-color: #e8c87a;
+            color: #09090e;
+        }
+
         .button-group {
             display: flex;
             gap: 1rem;
-            justify-content: center;
-            margin: 2rem 0;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(232, 200, 122, 0.1);
         }
 
-        button {
-            background-color: #e8c87a;
-            color: #09090e;
+        .btn {
+            padding: 0.875rem 1.5rem;
             border: none;
-            padding: 1rem 2rem;
-            font-size: 1rem;
-            font-weight: 700;
             border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             font-family: 'DM Sans', sans-serif;
         }
 
-        button:hover:not(:disabled) {
-            background-color: #f5d798;
+        .btn-primary {
+            background-color: #e8c87a;
+            color: #09090e;
+            flex: 1;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background-color: #f0d68f;
             transform: translateY(-2px);
         }
 
-        button:disabled {
-            background-color: #5a5a62;
-            color: #a8a8b0;
+        .btn-primary:disabled {
+            opacity: 0.5;
             cursor: not-allowed;
         }
 
-        /* Loading State */
-        .loading {
+        .loading-spinner {
             display: none;
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .loading.active {
-            display: block;
-        }
-
-        .spinner {
-            border: 3px solid #1a1a22;
-            border-top: 3px solid #e8c87a;
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid rgba(9, 9, 14, 0.3);
+            border-top-color: #09090e;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
+            animation: spin 0.6s linear infinite;
+            margin-right: 0.5rem;
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            to { transform: rotate(360deg); }
         }
 
-        /* Output Section */
-        .output-section {
+        .btn-primary.loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-primary.loading .loading-spinner {
+            display: inline-block;
+        }
+
+        .btn-primary.loading .btn-text {
+            margin-left: 0.25rem;
+        }
+
+        .results-container {
             display: none;
         }
 
-        .output-section.active {
+        .results-container.active {
             display: block;
         }
 
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(232, 200, 122, 0.2);
+        }
+
+        .results-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.75rem;
+            font-weight: 400;
+            color: #ededf0;
+        }
+
+        .prompts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
         .prompt-card {
-            background-color: #0f0f14;
-            border: 1px solid #1a1a22;
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 1.5rem;
+            border: 1px solid rgba(232, 200, 122, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            background-color: rgba(237, 237, 240, 0.03);
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
         }
 
-        .prompt-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #e8c87a;
-            margin-bottom: 1rem;
+        .prompt-card:hover {
+            border-color: rgba(232, 200, 122, 0.4);
+            background-color: rgba(232, 200, 122, 0.05);
         }
 
-        .prompt-content {
-            color: #a8a8b0;
-            line-height: 1.8;
+        .prompt-number {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(232, 200, 122, 0.8);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .prompt-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #ededf0;
+            flex: 1;
+            margin-bottom: 1.25rem;
             white-space: pre-wrap;
             word-wrap: break-word;
-            margin-bottom: 1rem;
         }
 
         .copy-btn {
-            background-color: rgba(232, 200, 122, 0.2);
+            background-color: rgba(232, 200, 122, 0.1);
             color: #e8c87a;
-            border: 1px solid #e8c87a;
-            padding: 0.75rem 1.5rem;
-            font-size: 0.9rem;
+            border: 1px solid rgba(232, 200, 122, 0.3);
+            padding: 0.625rem 1rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            align-self: flex-start;
         }
 
         .copy-btn:hover {
-            background-color: rgba(232, 200, 122, 0.3);
+            background-color: rgba(232, 200, 122, 0.2);
+            border-color: rgba(232, 200, 122, 0.5);
         }
 
         .copy-btn.copied {
-            background-color: rgba(100, 200, 100, 0.2);
-            color: #64c864;
-            border-color: #64c864;
+            background-color: rgba(232, 200, 122, 0.3);
+            color: #e8c87a;
         }
 
-        /* Footer */
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            justify-content: center;
+        }
+
+        .btn-secondary {
+            background-color: rgba(232, 200, 122, 0.1);
+            color: #e8c87a;
+            border: 1px solid rgba(232, 200, 122, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(232, 200, 122, 0.2);
+            border-color: rgba(232, 200, 122, 0.5);
+        }
+
         footer {
-            border-top: 1px solid #1a1a22;
             padding: 2rem;
             text-align: center;
-            color: #5a5a62;
+            border-top: 1px solid rgba(232, 200, 122, 0.1);
+            color: rgba(237, 237, 240, 0.6);
             font-size: 0.875rem;
         }
 
+        .error-message {
+            background-color: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: none;
+        }
+
+        .error-message.active {
+            display: block;
+        }
+
         @media (max-width: 768px) {
-            main {
-                padding: 1.5rem 1rem;
+            .niche-grid {
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             }
 
-            h1 {
+            .prompts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-title {
                 font-size: 1.75rem;
             }
 
-            .input-section {
-                padding: 1.5rem;
+            .header-left {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
             }
 
-            button {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn-primary {
                 width: 100%;
             }
         }
     </style>
 </head>
 <body>
-    <nav>
-        <a href="index.html" class="nav-logo">Noc&#232;ne</a>
-        <div class="credit-badge-count">0 Credits</div>
-    </nav>
+    <header>
+        <div class="header-left">
+            <a href="index.html" class="logo">Noc&#232;ne</a>
+            <h1 class="nav-title">AI Prompt Packs</h1>
+        </div>
+        <div class="credit-badge-count">-- credits</div>
+    </header>
 
     <main>
-        <h1>AI Prompt Generator</h1>
-        <p class="subtitle">Generate powerful prompts for any task using AI</p>
+        <div class="container">
+            <h2 class="page-title">Prompt Pack Generator</h2>
+            <p class="page-subtitle">Select a niche, pack size, and AI tool to generate a custom prompt pack tailored to your needs.</p>
 
-        <div class="input-section">
-            <div class="form-group">
-                <label for="task">What task do you want to create a prompt for?</label>
-                <textarea id="task" placeholder="e.g., Write a professional email, Create a marketing campaign, Debug code..." required></textarea>
+            <div class="error-message" id="errorMessage"></div>
+
+            <!-- Selection Interface -->
+            <div class="selection-container">
+                <!-- Niche Selection -->
+                <div class="selection-section">
+                    <label class="selection-label">Select a Niche</label>
+                    <div class="niche-grid" id="nicheGrid">
+                        <!-- Cards will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Pack Size Selection -->
+                <div class="selection-section">
+                    <label class="selection-label">Pack Size</label>
+                    <div class="pills-group" id="packSizeGroup">
+                        <!-- Pills will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- AI Tool Selection -->
+                <div class="selection-section">
+                    <label class="selection-label">AI Tool</label>
+                    <div class="pills-group" id="aiToolGroup">
+                        <!-- Pills will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Generate Button -->
+                <div class="button-group">
+                    <button class="btn btn-primary" id="generateBtn" disabled>
+                        <span class="loading-spinner"></span>
+                        <span class="btn-text">Generate Prompt Pack (1 credit)</span>
+                    </button>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="style">Prompt Style</label>
-                <select id="style" required>
-                    <option value="">Select a style</option>
-                    <option value="professional">Professional</option>
-                    <option value="creative">Creative</option>
-                    <option value="technical">Technical</option>
-                    <option value="conversational">Conversational</option>
-                    <option value="academic">Academic</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="context">Additional Context (Optional)</label>
-                <textarea id="context" placeholder="Any additional details or constraints..."></textarea>
-            </div>
-
-            <div class="button-group">
-                <button onclick="generatePrompt()">Generate Prompt (1 Credit)</button>
-            </div>
-        </div>
-
-        <div class="loading" id="loading">
-            <div class="spinner"></div>
-            <p>Generating your prompt...</p>
-        </div>
-
-        <div class="output-section" id="outputSection">
-            <div class="prompt-card">
-                <div class="prompt-title">Your Generated Prompt</div>
-                <div class="prompt-content" id="promptOutput"></div>
-                <button class="copy-btn" onclick="copyPrompt()">Copy to Clipboard</button>
+            <!-- Results Container -->
+            <div class="results-container" id="resultsContainer">
+                <div class="results-header">
+                    <h3 class="results-title">Your Prompt Pack</h3>
+                </div>
+                <div class="prompts-grid" id="promptsGrid">
+                    <!-- Prompt cards will be populated by JavaScript -->
+                </div>
+                <div class="action-buttons">
+                    <button class="btn btn-secondary" id="downloadBtn">Download as PDF</button>
+                    <button class="btn btn-primary" id="generateAnotherBtn">Generate Another Pack</button>
+                </div>
             </div>
         </div>
     </main>
 
     <footer>
-        &copy; 2026 Noc&#232;ne. All rights reserved.
+        &#169; 2026 Noc&#232;ne. All rights reserved.
     </footer>
 
     <script src="credits.js"></script>
     <script src="https://app.lemonsqueezy.com/js/lemon.js" defer></script>
-
     <script>
-        async function generatePrompt() {
-            const task = document.getElementById('task').value;
-            const style = document.getElementById('style').value;
-            const context = document.getElementById('context').value;
+        const niches = [
+            'Marketing &amp; Copywriting',
+            'Social Media Content',
+            'SEO &amp; Blogging',
+            'Email Campaigns',
+            'E-commerce &amp; Product',
+            'Coding &amp; Development',
+            'Education &amp; Teaching',
+            'Health &amp; Fitness',
+            'Real Estate',
+            'Photography &amp; Midjourney',
+            'Business Strategy',
+            'Creative Writing'
+        ];
 
-            if (!task || !style) {
-                alert('Please fill in the task and select a style');
-                return;
+        const packSizes = ['10 prompts', '20 prompts', '25 prompts'];
+        const aiTools = ['ChatGPT', 'Claude', 'Midjourney', 'DALL-E', 'General/Any'];
+
+        let selectedNiche = null;
+        let selectedPackSize = null;
+        let selectedAiTool = null;
+
+        // Initialize the interface
+        function initializeInterface() {
+            // Populate niches
+            const nicheGrid = document.getElementById('nicheGrid');
+            niches.forEach(niche => {
+                const card = document.createElement('div');
+                card.className = 'niche-card';
+                card.textContent = niche;
+                card.addEventListener('click', () => selectNiche(card, niche));
+                nicheGrid.appendChild(card);
+            });
+
+            // Populate pack sizes
+            const packSizeGroup = document.getElementById('packSizeGroup');
+            packSizes.forEach(size => {
+                const pill = document.createElement('button');
+                pill.className = 'pill';
+                pill.textContent = size;
+                pill.addEventListener('click', () => selectPackSize(pill, size));
+                packSizeGroup.appendChild(pill);
+            });
+
+            // Populate AI tools
+            const aiToolGroup = document.getElementById('aiToolGroup');
+            aiTools.forEach(tool => {
+                const pill = document.createElement('button');
+                pill.className = 'pill';
+                pill.textContent = tool;
+                pill.addEventListener('click', () => selectAiTool(pill, tool));
+                aiToolGroup.appendChild(pill);
+            });
+        }
+
+        function selectNiche(element, niche) {
+            document.querySelectorAll('.niche-card').forEach(card => card.classList.remove('selected'));
+            element.classList.add('selected');
+            selectedNiche = niche;
+            checkEnableGenerate();
+        }
+
+        function selectPackSize(element, size) {
+            document.querySelectorAll('#packSizeGroup .pill').forEach(pill => pill.classList.remove('selected'));
+            element.classList.add('selected');
+            selectedPackSize = size;
+            checkEnableGenerate();
+        }
+
+        function selectAiTool(element, tool) {
+            document.querySelectorAll('#aiToolGroup .pill').forEach(pill => pill.classList.remove('selected'));
+            element.classList.add('selected');
+            selectedAiTool = tool;
+            checkEnableGenerate();
+        }
+
+        function checkEnableGenerate() {
+            const generateBtn = document.getElementById('generateBtn');
+            if (selectedNiche && selectedPackSize && selectedAiTool) {
+                generateBtn.disabled = false;
+            } else {
+                generateBtn.disabled = true;
             }
+        }
 
-            // Check credits
+        async function generatePrompts() {
+            const generateBtn = document.getElementById('generateBtn');
+            const errorMessage = document.getElementById('errorMessage');
+
+            // Check credit
             if (typeof Nocene !== 'undefined' && Nocene.requireCredit) {
-                if (!Nocene.requireCredit()) {
-                    alert('You don\'t have enough credits.');
+                const hasCredit = Nocene.requireCredit();
+                if (!hasCredit) {
+                    errorMessage.textContent = 'You do not have enough credits. Please purchase more credits to continue.';
+                    errorMessage.classList.add('active');
                     return;
                 }
             }
 
-            const loading = document.getElementById('loading');
-            const outputSection = document.getElementById('outputSection');
-            loading.classList.add('active');
-            outputSection.classList.remove('active');
+            // Show loading state
+            generateBtn.classList.add('loading');
+            generateBtn.disabled = true;
+            errorMessage.classList.remove('active');
 
             try {
-                const systemPrompt = `You are an expert at creating powerful, effective prompts for AI models. Generate a detailed, well-structured prompt that will help users get the best results from AI.`;
+                const packSizeMap = {
+                    '10 prompts': 10,
+                    '20 prompts': 20,
+                    '25 prompts': 25
+                };
 
-                const userMessage = `Create a detailed prompt for the following:
-Task: ${task}
-Style: ${style}
-Context: ${context || 'None provided'}
+                const packSize = packSizeMap[selectedPackSize];
 
-The prompt should be clear, specific, and optimized for getting the best results from an AI model.`;
+                const prompt = `Generate ${packSize} high-quality, practical prompts for ${selectedNiche} optimized for ${selectedAiTool}.
+
+Return ONLY a valid JSON array of prompt strings. No explanations, no markdown, no code blocks.
+Example format: ["prompt 1", "prompt 2", "prompt 3"]
+
+Each prompt should be:
+- Specific and actionable
+- Between 50-150 words
+- Optimized for the selected AI tool
+- Immediately usable
+
+Generate exactly ${packSize} prompts.`;
 
                 const response = await fetch('/api/generate', {
                     method: 'POST',
-                    headers: { 'content-type': 'application/json' },
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
                     body: JSON.stringify({
                         model: 'claude-sonnet-4-20250514',
-                        max_tokens: 1000,
-                        system: systemPrompt,
-                        messages: [{ role: 'user', content: userMessage }]
+                        max_tokens: 4000,
+                        messages: [
+                            {
+                                role: 'user',
+                                content: prompt
+                            }
+                        ]
                     })
                 });
 
-                if (!response.ok) throw new Error('API error');
-                const data = await response.json();
-                const content = data.content || data.text || '';
+                if (!response.ok) {
+                    throw new Error(`API error: ${response.status}`);
+                }
 
-                document.getElementById('promptOutput').textContent = content;
-                loading.classList.remove('active');
-                outputSection.classList.add('active');
+                const data = await response.json();
+                let content = data.content[0].text.trim();
+
+                // Parse JSON from response
+                let prompts;
+                try {
+                    prompts = JSON.parse(content);
+                } catch (e) {
+                    // Try to extract JSON from the response
+                    const jsonMatch = content.match(/\[[\s\S]*\]/);
+                    if (jsonMatch) {
+                        prompts = JSON.parse(jsonMatch[0]);
+                    } else {
+                        throw new Error('Could not parse prompts from response');
+                    }
+                }
+
+                // Ensure we have an array
+                if (!Array.isArray(prompts)) {
+                    throw new Error('Response is not an array of prompts');
+                }
+
+                displayPrompts(prompts);
+                resetSelection();
+
             } catch (error) {
-                loading.classList.remove('active');
-                alert('Error generating prompt: ' + error.message);
+                console.error('Error generating prompts:', error);
+                errorMessage.textContent = `Error generating prompts: ${error.message}. Please try again.`;
+                errorMessage.classList.add('active');
+            } finally {
+                generateBtn.classList.remove('loading');
+                checkEnableGenerate();
             }
         }
 
-        function copyPrompt() {
-            const promptContent = document.getElementById('promptOutput').textContent;
-            navigator.clipboard.writeText(promptContent).then(() => {
-                const btn = event.target;
-                const originalText = btn.textContent;
-                btn.textContent = '✓ Copied!';
-                btn.classList.add('copied');
+        function displayPrompts(prompts) {
+            const resultsContainer = document.getElementById('resultsContainer');
+            const promptsGrid = document.getElementById('promptsGrid');
+
+            promptsGrid.innerHTML = '';
+            prompts.forEach((prompt, index) => {
+                const card = document.createElement('div');
+                card.className = 'prompt-card';
+                card.innerHTML = `
+                    <div class="prompt-number">Prompt ${index + 1}</div>
+                    <div class="prompt-text">${escapeHtml(prompt)}</div>
+                    <button class="copy-btn" onclick="copyToClipboard('${escapeHtml(prompt).replace(/'/g, "\\'")}', this)">Copy to Clipboard</button>
+                `;
+                promptsGrid.appendChild(card);
+            });
+
+            resultsContainer.classList.add('active');
+            resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function copyToClipboard(text, button) {
+            // Unescape HTML entities
+            const div = document.createElement('div');
+            div.innerHTML = text;
+            const plainText = div.textContent || div.innerText;
+
+            navigator.clipboard.writeText(plainText).then(() => {
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                button.classList.add('copied');
                 setTimeout(() => {
-                    btn.textContent = originalText;
-                    btn.classList.remove('copied');
+                    button.textContent = originalText;
+                    button.classList.remove('copied');
                 }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy:', err);
             });
         }
 
-        function updateCreditBadge() {
-            const badge = document.querySelector('.credit-badge-count');
-            if (typeof Nocene !== 'undefined' && Nocene.getCredits) {
-                const credits = Nocene.getCredits();
-                badge.textContent = credits + ' Credits';
-            }
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
         }
 
-        function initializeInterface() {
-            updateCreditBadge();
-            if (typeof Nocene !== 'undefined' && Nocene.onCreditChange) {
-                Nocene.onCreditChange(() => {
-                    updateCreditBadge();
-                });
-            }
+        function resetSelection() {
+            document.querySelectorAll('.niche-card').forEach(card => card.classList.remove('selected'));
+            document.querySelectorAll('.pill').forEach(pill => pill.classList.remove('selected'));
+            selectedNiche = null;
+            selectedPackSize = null;
+            selectedAiTool = null;
+            checkEnableGenerate();
         }
 
+        function downloadAsPDF() {
+            const promptsGrid = document.getElementById('promptsGrid');
+            const cards = promptsGrid.querySelectorAll('.prompt-card');
+
+            let content = `AI Prompt Pack\n`;
+            content += `Niche: ${selectedNiche}\n`;
+            content += `Pack Size: ${selectedPackSize}\n`;
+            content += `AI Tool: ${selectedAiTool}\n`;
+            content += `Generated: ${new Date().toLocaleDateString()}\n\n`;
+            content += `${'='.repeat(80)}\n\n`;
+
+            cards.forEach((card, index) => {
+                const promptText = card.querySelector('.prompt-text').textContent;
+                content += `PROMPT ${index + 1}\n`;
+                content += `${'-'.repeat(80)}\n`;
+                content += `${promptText}\n\n`;
+            });
+
+            // Create a blob and download
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+            element.setAttribute('download', `prompt-pack-${Date.now()}.txt`);
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        // Event listeners
+        document.getElementById('generateBtn').addEventListener('click', generatePrompts);
+        document.getElementById('downloadBtn').addEventListener('click', downloadAsPDF);
+        document.getElementById('generateAnotherBtn').addEventListener('click', () => {
+            document.getElementById('resultsContainer').classList.remove('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Initialize on load
         document.addEventListener('DOMContentLoaded', initializeInterface);
     </script>
 </body>
