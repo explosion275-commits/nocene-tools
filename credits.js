@@ -2,15 +2,25 @@
  * Nocène Credits System
  * Shared across all tool pages.
  * Uses localStorage key: nocene_credits
- *
- * PRODUCTION NOTE: The Anthropic API key is called directly from the frontend
- * in this prototype. In production, all API calls should be proxied through a
- * backend endpoint (e.g. /api/generate) to keep the key secret.
  */
 const Nocene = (() => {
   const STORAGE_KEY = 'nocene_credits';
   const DEMO_KEY = 'nocene_demo_claimed';
   const STORE_SLUG = 'nocene';
+
+  // --- Lemon Squeezy Variant IDs ---
+  // TODO: Replace these with your actual Lemon Squeezy variant IDs
+  const VARIANTS = {
+    starter: 'VARIANT_5',   // 5 credits - $9
+    creator: 'VARIANT_12',  // 12 credits - $19
+    pro:     'VARIANT_25'   // 25 credits - $35
+  };
+
+  const PLAN_CREDITS = {
+    starter: 5,
+    creator: 12,
+    pro: 25
+  };
 
   function get() {
     return parseInt(localStorage.getItem(STORAGE_KEY) || '0', 10);
@@ -22,16 +32,18 @@ const Nocene = (() => {
     renderBadge();
   }
 
-  function use() {
+  function use(n) {
+    n = n || 1;
     const current = get();
-    if (current <= 0) return false;
-    localStorage.setItem(STORAGE_KEY, current - 1);
+    if (current < n) return false;
+    localStorage.setItem(STORAGE_KEY, current - n);
     renderBadge();
     return true;
   }
 
-  function has() {
-    return get() > 0;
+  function has(n) {
+    n = n || 1;
+    return get() >= n;
   }
 
   function claimDemo() {
@@ -39,6 +51,7 @@ const Nocene = (() => {
     localStorage.setItem(DEMO_KEY, '1');
     add(1);
     closePaywall();
+    showToast('1 free credit added!');
     return true;
   }
 
@@ -49,73 +62,69 @@ const Nocene = (() => {
   function handlePostPurchase() {
     const params = new URLSearchParams(window.location.search);
     if (params.get('purchase') !== 'success') return;
-    const pkg = parseInt(params.get('pkg'), 10);
-    if ([5, 12, 25].includes(pkg)) {
-      add(pkg);
-      showToast(pkg + ' credits added to your account!');
+    const pkg = params.get('pkg');
+    const credits = PLAN_CREDITS[pkg] || parseInt(pkg, 10);
+    if (credits && credits > 0) {
+      add(credits);
+      showToast(credits + ' credits added to your account!');
       window.history.replaceState({}, '', window.location.pathname);
     }
   }
 
   function renderBadge() {
     const badges = document.querySelectorAll('.credit-badge-count');
-    badges.forEach(b => { b.textContent = get(); });
+    badges.forEach(function(b) { b.textContent = get(); });
+    var cd = document.getElementById('creditDisplay');
+    if (cd) cd.textContent = get() + ' Credits';
+    var cd2 = document.getElementById('credit-display');
+    if (cd2) cd2.textContent = get();
   }
 
-  function requireCredit(onSuccess) {
-    if (has()) {
-      use();
+  function requireCredit(onSuccess, n) {
+    n = n || 1;
+    if (has(n)) {
+      use(n);
       onSuccess();
     } else {
       showPaywall();
     }
   }
 
-  function getLemonURL(pkg) {
-    const page = window.location.pathname.split('/').pop() || 'index.html';
-    const redirect = encodeURIComponent('https://nocene.com/' + page + '?purchase=success&pkg=' + pkg);
-    const variants = { 5: 'VARIANT_5', 12: 'VARIANT_12', 25: 'VARIANT_25' };
-    return 'https://' + STORE_SLUG + '.lemonsqueezy.com/checkout/buy/' + variants[pkg] + '?checkout[custom][redirect_url]=' + redirect;
+  function getLemonURL(plan) {
+    var variant = VARIANTS[plan];
+    if (!variant) return '#';
+    var page = window.location.pathname.split('/').pop() || 'index.html';
+    var redirect = encodeURIComponent(window.location.origin + '/' + page + '?purchase=success&pkg=' + plan);
+    return 'https://' + STORE_SLUG + '.lemonsqueezy.com/checkout/buy/' + variant + '?checkout[custom][redirect_url]=' + redirect;
   }
 
   function showPaywall() {
-    if (document.getElementById('nocene-paywall')) {
-      document.getElementById('nocene-paywall').classList.add('active');
-      return;
-    }
-    const overlay = document.createElement('div');
+    var pw = document.getElementById('nocene-paywall');
+    if (pw) { pw.classList.add('active'); return; }
+    var overlay = document.createElement('div');
     overlay.id = 'nocene-paywall';
     overlay.className = 'active';
-    overlay.innerHTML = '<div class="pw-backdrop"></div><div class="pw-modal"><button class="pw-close" onclick="Nocene.closePaywall()">&times;</button><h2>You\'re out of credits</h2><p class="pw-sub">Pick a plan to keep creating with Nocène tools.</p><div class="pw-plans"><div class="pw-plan"><div class="pw-plan-name">Starter</div><div class="pw-plan-credits">5 credits</div><div class="pw-plan-price">$9</div><a href="' + getLemonURL(5) + '" class="pw-btn lemonsqueezy-button">Get 5 Credits</a></div><div class="pw-plan featured"><div class="pw-badge">Most Popular</div><div class="pw-plan-name">Creator</div><div class="pw-plan-credits">12 credits</div><div class="pw-plan-price">$19</div><a href="' + getLemonURL(12) + '" class="pw-btn lemonsqueezy-button">Get 12 Credits</a></div><div class="pw-plan"><div class="pw-plan-name">Pro</div><div class="pw-plan-credits">25 credits</div><div class="pw-plan-price">$35</div><a href="' + getLemonURL(25) + '" class="pw-btn lemonsqueezy-button">Get 25 Credits</a></div></div>' + (!hasClaimed() ? '<a href="#" class="pw-demo" onclick="Nocene.claimDemo(); return false;">or try 1 free generation</a>' : '') + '</div>';
+    overlay.style.cssText = 'display:flex;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(9,9,14,0.8);backdrop-filter:blur(8px);z-index:1000;align-items:center;justify-content:center;';
+    overlay.innerHTML = '<div style="background:#09090e;border:1px solid rgba(232,200,122,0.2);border-radius:16px;padding:48px 40px;max-width:700px;width:90%;position:relative;"><button onclick="Nocene.closePaywall()" style="position:absolute;top:20px;right:20px;background:none;border:none;color:#ededf0;font-size:24px;cursor:pointer;">&times;</button><h2 style="font-family:DM Serif Display,serif;font-size:32px;text-align:center;margin-bottom:16px;">Get Credits</h2><p style="color:#b5b5ba;text-align:center;margin-bottom:40px;">Choose a plan to keep creating</p><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px;margin-bottom:40px;"><div style="border:1px solid rgba(232,200,122,0.2);border-radius:12px;padding:28px 20px;text-align:center;"><div style="font-weight:600;margin-bottom:8px;">Starter</div><div style="font-size:28px;font-weight:600;color:#e8c87a;margin-bottom:8px;">$9</div><div style="font-size:13px;color:#b5b5ba;">5 credits</div></div><div style="border:1px solid #e8c87a;border-radius:12px;padding:28px 20px;text-align:center;background:rgba(232,200,122,0.08);"><div style="font-weight:600;margin-bottom:8px;">Creator</div><div style="font-size:28px;font-weight:600;color:#e8c87a;margin-bottom:8px;">$19</div><div style="font-size:13px;color:#b5b5ba;">12 credits</div></div><div style="border:1px solid rgba(232,200,122,0.2);border-radius:12px;padding:28px 20px;text-align:center;"><div style="font-weight:600;margin-bottom:8px;">Pro</div><div style="font-size:28px;font-weight:600;color:#e8c87a;margin-bottom:8px;">$35</div><div style="font-size:13px;color:#b5b5ba;">25 credits</div></div></div><a href="' + getLemonURL('creator') + '" class="lemonsqueezy-button" style="display:block;width:100%;background:#e8c87a;color:#09090e;padding:14px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:15px;text-align:center;">Purchase Credits</a>' + (!hasClaimed() ? '<a href="#" onclick="Nocene.claimDemo();return false;" style="display:block;text-align:center;margin-top:16px;color:#e8c87a;text-decoration:none;font-size:14px;">or try 1 free generation</a>' : '') + '</div>';
     document.body.appendChild(overlay);
   }
 
   function closePaywall() {
-    const pw = document.getElementById('nocene-paywall');
+    var pw = document.getElementById('nocene-paywall');
     if (pw) pw.classList.remove('active');
   }
 
-  function showToast(msg) {
-    const t = document.createElement('div');
-    t.className = 'nocene-toast';
+  function showToast(msg, isError) {
+    var t = document.createElement('div');
+    t.style.cssText = 'position:fixed;bottom:24px;right:24px;background:rgba(232,200,122,0.1);border:1px solid #e8c87a;color:#e8c87a;padding:16px 24px;border-radius:8px;font-size:14px;z-index:2000;max-width:300px;opacity:1;transition:all 0.3s ease;';
+    if (isError) { t.style.background = 'rgba(255,100,100,0.1)'; t.style.borderColor = '#ff6464'; t.style.color = '#ff6464'; }
     t.textContent = msg;
     document.body.appendChild(t);
-    setTimeout(() => t.classList.add('show'), 10);
-    setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 400); }, 3500);
+    setTimeout(function() { t.style.opacity = '0'; setTimeout(function() { t.remove(); }, 400); }, 3500);
   }
 
-  function init() {
-    handlePostPurchase();
-    renderBadge();
-  }
-
+  function init() { handlePostPurchase(); renderBadge(); }
   document.addEventListener('DOMContentLoaded', init);
 
-  return {
-    get, add, use, has,
-    claimDemo, handlePostPurchase,
-    renderBadge, requireCredit,
-    showPaywall, closePaywall,
-    getLemonURL, showToast
-  };
+  return { get: get, add: add, use: use, has: has, claimDemo: claimDemo, handlePostPurchase: handlePostPurchase, renderBadge: renderBadge, requireCredit: requireCredit, showPaywall: showPaywall, closePaywall: closePaywall, getLemonURL: getLemonURL, showToast: showToast };
 })();
