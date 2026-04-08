@@ -517,7 +517,7 @@
         <a href="index.html" class="nav-logo">NocÃ¨ne</a>
         <div class="credit-badge">
             <span>Credits:</span>
-            <span class="credit-badge-value" id="credit-display">0</span>
+            <span class="credit-badge-value credit-badge-count" id="credit-display">0</span>
         </div>
     </nav>
 
@@ -581,7 +581,7 @@
     </main>
 
     <!-- Scripts -->
-    <script src="lemon.js"></script>
+    <script src="https://app.lemonsqueezy.com/js/lemon.js" defer></script>
     <script src="credits.js"></script>
 
     <script>
@@ -593,7 +593,7 @@
 
         // Initialize credit display
         function updateCreditDisplay() {
-            const credits = Lemon.credits || 0;
+            const credits = Nocene.get();
             document.getElementById('credit-display').textContent = credits;
         }
 
